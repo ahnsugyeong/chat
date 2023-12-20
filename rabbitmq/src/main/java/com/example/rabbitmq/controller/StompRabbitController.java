@@ -1,7 +1,6 @@
 package com.example.rabbitmq.controller;
 
-import com.example.rabbitmq.dto.ChatMessage;
-import java.time.LocalDateTime;
+import com.example.rabbitmq.dto.ChatDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
@@ -18,7 +17,7 @@ public class StompRabbitController {
     private final static String CHAT_QUEUE_NAME = "chat.queue";
 
     @MessageMapping("chat.enter.{chatRoomId}")
-    public void enter(ChatMessage message, @DestinationVariable String chatRoomId) {
+    public void enter(ChatDto message, @DestinationVariable String chatRoomId) {
 
         message.setMessage("🐶 " + message.getNickname() + "님이 입장하셨습니다.");
 
@@ -31,7 +30,7 @@ public class StompRabbitController {
 
 
     @MessageMapping("chat.message.{chatRoomId}")
-    public void send(ChatMessage message, @DestinationVariable String chatRoomId) {
+    public void send(ChatDto message, @DestinationVariable String chatRoomId) {
 
 //        chat.setRegDate(LocalDateTime.now());
 
@@ -42,7 +41,7 @@ public class StompRabbitController {
 
     //receive()는 단순히 큐에 들어온 메세지를 소비만 한다. (현재는 디버그용도)
     @RabbitListener(queues = CHAT_QUEUE_NAME)
-    public void receive(ChatMessage message) {
+    public void receive(ChatDto message) {
         System.out.println("received : " + message.getMessage());
     }
 

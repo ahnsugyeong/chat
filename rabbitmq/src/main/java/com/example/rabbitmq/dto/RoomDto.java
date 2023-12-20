@@ -8,14 +8,14 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
-public class ChatRoom {
+public class RoomDto {
 
     private String roomId;
     private String roomName;
 
 
-    public static ChatRoom create(String name) {
-        ChatRoom room = new ChatRoom();
+    public static RoomDto create(String name) {
+        RoomDto room = new RoomDto();
         room.roomId = UUID.randomUUID().toString();
         room.roomName = name;
         return room;
